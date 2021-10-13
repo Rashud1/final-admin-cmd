@@ -14,8 +14,9 @@ Content-Type: application/json
    "fname": "Divyesh", 
    "lname": "Shrestha", 
    "email": "a@a.com",
-   "password": "123456",
-    "phone": "0450757589",
+   "dob": "2021-10-10",
+   "password": "123456dgdg",
+    "phone": "610450757589",
     "address": "Sydney , NSW",
     "gender": "male"
     

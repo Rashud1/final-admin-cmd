@@ -17,7 +17,7 @@ const schema = Joi.object({
 });
 
 const value = schema.validate(req.body)
-console.log(value)
+
 if(value.error){
     return res.json({
         status: "error",
