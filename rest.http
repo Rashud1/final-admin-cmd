@@ -13,10 +13,10 @@ Content-Type: application/json
 {
    "fname": "Divyesh", 
    "lname": "Shrestha", 
-   "email": "a@a.com",
+   "email": "a@b.com",
    "dob": "2021-10-10",
    "password": "123456dgdg",
-    "phone": "610450757589",
+    "phone": "610450757589000",
     "address": "Sydney , NSW",
     "gender": "male"
     
