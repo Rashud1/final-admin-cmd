@@ -1,0 +1,27 @@
+#### Admin CMS APIs
+
+
+
+### root api
+GET http://localhost:8000/
+
+
+### Create new user
+POST http://localhost:8000/api/v1/user
+Content-Type: application/json
+
+{
+   "fname": "Divyesh", 
+   "lname": "Shrestha", 
+   "email": "a@a.com",
+   "password": "123456",
+    "phone": "0450757589",
+    "address": "Sydney , NSW",
+    "gender": "male"
+    
+}
+
+//server side validation
+//send email confirmation
+//validate email
+//account has been activated
