@@ -2,7 +2,8 @@ import express from "express";
 import { createUser } from "../config/models/user-model/User.model.js";
 import { createAdminUserValidation } from "../middlewares/formValidation.middleware.js";
 import {hashPassword} from "../helpers/bcrypt.helper.js";
-
+import { createUniqueEmailConfirmation } from "../config/models/session/Session.model.js";
+import { emailProcessor } from "../helpers/email.helper.js";
 const Router = express.Router()
 
 
@@ -18,21 +19,30 @@ Router.post("/", createAdminUserValidation, async (req, res)=>{
     try {
         //TODO
         // server side validation:lease refer form validation 
-
-
-
         //encrypt password
         const hashPass = hashPassword(req.body.password)
         if(hashPass){
         req.body.password = hashPass
         console.log(hashPass)
 
-        const result = await createUser(req.body)
-        if(result?._id){
+        const {_id, fname, email} = await createUser(req.body)
+
+        if(_id){
             //TODO
-            // create unique activation linka nd email to the user
+            //result.email is from session model async email as it expects email to be confirmed
+            const {pin} = await createUniqueEmailConfirmation(email) 
 
-
+           
+            if(pin){
+            // create unique activation linka nd email to the user 
+            const forSendingEmail = {
+                fname,
+                email,
+                pin,
+            } 
+            emailProcessor(forSendingEmail)
+            }
+            
             return res.json({
                 state: 'success',
                 message: "New user has been created succesfully! We have send an email confirmation to your email,please check and follow instructions to activate your aceount",

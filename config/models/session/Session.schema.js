@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 
 const SessionSchema = mongoose.Schema({
-    pins: {
+    pin: {
         type: Number,
         required: true,
     
@@ -17,15 +17,15 @@ const SessionSchema = mongoose.Schema({
 
     type: {
         type: String,
-        default: "email",
+        default: "emailValidation",
         max: 50,
     }
 
 
 }, {
-    timestamp: true,
+    timestamps: true,
 }
 );
 
 const session = mongoose.model("Session", SessionSchema) 
-export default user;
+export default session;
