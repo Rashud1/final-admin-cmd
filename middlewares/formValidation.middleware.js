@@ -27,4 +27,24 @@ if(value.error){
 next();
 };
 
+export const adminEmailVerificationValidation = (req, res, next) =>{
+    const schema = Joi.object({
+        
+        email: Joi.string().max(50).email({ minDomainSegments: 2 }),
+        pin: Joi.string().min(6).required(),
+      
+    });
+    
+    const value = schema.validate(req.body)
+    
+    if(value.error){
+        return res.json({
+            status: "error",
+            message: value.error.message,
+        })
+    }
+    next();
+    };
+
+
 

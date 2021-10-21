@@ -13,7 +13,7 @@ Content-Type: application/json
 {
    "fname": "Divyesh", 
    "lname": "Shrestha", 
-   "email": "j@b.com",
+   "email": "a@b.com",
    "dob": "2021-10-10",
    "password": "123456dgdg",
     "phone": "000000450757589",
@@ -21,8 +21,19 @@ Content-Type: application/json
     "gender": "male"
     
 }
-
+//The following are the steps needed to be followed
 //server side validation
 //send email confirmation
 //validate email
 //account has been activated
+
+##### Email API
+
+### verify admin email
+PATCH http://localhost:8000/api/v1/user/email-verification
+Content-Type: application/json
+
+{
+    "pin":"416543",
+    "email":"a@b.com"
+}

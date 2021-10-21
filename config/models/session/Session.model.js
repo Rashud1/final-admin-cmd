@@ -32,3 +32,24 @@ export const createUniqueEmailConfirmation = async email =>{
        console.log(error)
     }
 }
+
+export const findAdminEmailVerification = async (filterObj) =>{
+    try {
+        const result = await SessionSchema.findOne(filterObj);//{pin, email}
+        console.log(result, 'from session')
+        return result;
+    } catch (error) {
+       console.log(error)
+    }
+}
+
+
+export const deleteInfo = async filterObj =>{
+    try {
+        const result = await SessionSchema.findOneAndDelete(filterObj)
+        return result
+    } catch (error) {
+        console.log(error)
+        
+    }
+}

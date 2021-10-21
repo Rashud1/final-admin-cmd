@@ -1,21 +1,18 @@
 import express from "express";
-import { createUser } from "../config/models/user-model/User.model.js";
-import { createAdminUserValidation } from "../middlewares/formValidation.middleware.js";
+import { createUser, verifyEmail } from "../config/models/user-model/User.model.js";
+import { createAdminUserValidation, adminEmailVerificationValidation } from "../middlewares/formValidation.middleware.js";
 import {hashPassword} from "../helpers/bcrypt.helper.js";
-import { createUniqueEmailConfirmation } from "../config/models/session/Session.model.js";
-import { emailProcessor } from "../helpers/email.helper.js";
+import { createUniqueEmailConfirmation, findAdminEmailVerification, deleteInfo } from "../config/models/session/Session.model.js";
+import { sendEmailVerificationLink,sendEmailVerificationLinkConfirmation } from "../helpers/email.helper.js";
 const Router = express.Router()
 
 
 Router.all("/", (req, res, next)=>{
-    console.log("from user router");
-
-
     next();
 })
 
 Router.post("/", createAdminUserValidation, async (req, res)=>{
-    console.log(req.body)
+   
     try {
         //TODO
         // server side validation:lease refer form validation 
@@ -40,7 +37,7 @@ Router.post("/", createAdminUserValidation, async (req, res)=>{
                 email,
                 pin,
             } 
-            emailProcessor(forSendingEmail)
+            sendEmailVerificationLink(forSendingEmail)
             }
             
             return res.json({
@@ -70,5 +67,51 @@ Router.post("/", createAdminUserValidation, async (req, res)=>{
     }
 
 })
+
+//email verification
+Router.patch("/email-verification", adminEmailVerificationValidation, async (req, res) =>{
+    try {
+        const result = await findAdminEmailVerification(req.body)
+        if(result?._id){
+            ///TO DO
+            //INFROMATION IS VALID AND NOW WE CAN UPDATE THE USER
+            const data = await verifyEmail(result.email)
+           console.log(data, "from verify email")
+            if(data?._id){
+             //DELETE THE SESSION INFO KOWN AS PIN
+             deleteInfo(req.body)
+
+            //send email confirmation to user
+            sendEmailVerificationLinkConfirmation({
+                fname: data.fname,
+                email: data.email,
+            })
+
+
+
+        return  res.json({
+            status: "success",
+            message: "Your email has been verified ,you may log in now",
+        })
+    }
+}
+  
+         res.json({
+            status: "error",
+            message: "Error,Unable to verify the email, Please try again later",
+        })
+     
+            
+
+        
+    } catch (error) {
+        res.json({
+            status: "error",
+            message: "Error,Unable to verify the email, Please try again later",
+        })
+    }
+}
+)
+
 
 export default Router;
