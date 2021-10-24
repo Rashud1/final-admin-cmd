@@ -13,7 +13,7 @@ Content-Type: application/json
 {
    "fname": "Divyesh", 
    "lname": "Shrestha", 
-   "email": "a@b.com",
+   "email": "l@b.com",
    "dob": "2021-10-10",
    "password": "123456dgdg",
     "phone": "000000450757589",
@@ -34,6 +34,6 @@ PATCH http://localhost:8000/api/v1/user/email-verification
 Content-Type: application/json
 
 {
-    "pin":"416543",
+    "pin":"708496",
     "email":"a@b.com"
 }

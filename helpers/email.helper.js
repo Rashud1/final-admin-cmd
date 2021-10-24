@@ -79,7 +79,7 @@ const emailProcessor = ({  email, subject, text, html}) =>{
      
         const obj ={
             ...emailObj,
-         subject: "Email onfirmation Required",
+         subject: "Email onfirmation Successful",
          text: `Hi ${fname}, Your email has benn verified, You may log in nowl.`,
          html:`
          
